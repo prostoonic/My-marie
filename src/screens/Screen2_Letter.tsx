@@ -10,6 +10,8 @@ export function Screen2_Letter() {
   const [opened, setOpened] = useState(false)
   const lenisRef = useRef<Lenis | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const goNext = useScreenStore((s) => s.goNext)
 
   useEffect(() => {
@@ -30,16 +32,96 @@ export function Screen2_Letter() {
     }
   }, [opened])
 
+  useEffect(() => {
+    const wrapper = wrapperRef.current
+    const canvas = canvasRef.current
+    if (!wrapper || !canvas) return
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const rowSize = 20
+    const dotBase = 5
+    const dotMin = 2.5
+    const dotColor = '#cc44aa'
+
+    let cursorX = -1000
+    let cursorY = -1000
+
+    const resizeCanvas = () => {
+      canvas.width = wrapper.clientWidth
+      canvas.height = wrapper.clientHeight
+    }
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      const cols = Math.ceil(canvas.width / rowSize)
+      const rows = Math.ceil(canvas.height / rowSize)
+
+      for (let x = 0; x < cols; x += 1) {
+        for (let y = 0; y < rows; y += 1) {
+          const distance = Math.hypot(cursorX / rowSize - x, cursorY / rowSize - y)
+          const dotSize = Math.max(dotMin, dotBase - distance * 0.75)
+
+          ctx.beginPath()
+          ctx.arc(rowSize * x, rowSize * y, dotSize, 0, 2 * Math.PI)
+          ctx.fillStyle = dotColor
+          ctx.fill()
+        }
+      }
+    }
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      cursorX = event.clientX - rect.left
+      cursorY = event.clientY - rect.top
+      render()
+    }
+
+    const handleMouseLeave = () => {
+      cursorX = -1000
+      cursorY = -1000
+      render()
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      resizeCanvas()
+      render()
+    })
+
+    resizeCanvas()
+    render()
+
+    resizeObserver.observe(wrapper)
+    wrapper.addEventListener('mousemove', handleMouseMove)
+    wrapper.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      resizeObserver.disconnect()
+      wrapper.removeEventListener('mousemove', handleMouseMove)
+      wrapper.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [])
+
   return (
     <div
+      ref={wrapperRef}
       className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden"
       style={{ background: '#050510' }}
     >
+      <canvas
+        ref={canvasRef}
+        className="CanvasDots absolute inset-0 w-full h-full pointer-events-none"
+        style={{ opacity: 0.5 }}
+        aria-hidden="true"
+      />
+
       <AnimatePresence mode="wait">
         {!opened ? (
           <motion.div
             key="envelope"
-            className="flex flex-col items-center gap-6 cursor-pointer"
+            className="relative z-10 flex flex-col items-center gap-6 cursor-pointer"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05, y: -30 }}

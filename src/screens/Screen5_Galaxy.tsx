@@ -1,38 +1,22 @@
 // src/screens/Screen5_Galaxy.tsx
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import TypeIt from 'typeit-react'
+import Tilt from 'react-parallax-tilt'
 import { NavigationArrow } from '../components/NavigationArrow'
+import { Galaxy } from '../components/Galaxy'
 import styles from '../styles/galaxy.module.scss'
+import TypeIt from 'typeit-react'
 
 function rando(range: number) {
   return Math.floor(Math.random() * range)
 }
 
 export function Screen5_Galaxy() {
-  const galaxyRef  = useRef<HTMLDivElement>(null)
   const bgStarsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const galaxy  = galaxyRef.current
     const bgStars = bgStarsRef.current
-    if (!galaxy || !bgStars) return
-
-    const galaxyFragment = document.createDocumentFragment()
-    for (let i = 0; i < 5000; i++) {
-      const star = document.createElement('span')
-      star.className = styles.star
-      const d = rando(3)
-      Object.assign(star.style, {
-        height: `${d}px`,
-        width: `${d}px`,
-        top: `${rando(800)}px`,
-        left: `${rando(800)}px`,
-        backgroundColor: `hsla(${rando(360)},50%,75%,1)`,
-      })
-      galaxyFragment.appendChild(star)
-    }
-    galaxy.appendChild(galaxyFragment)
+    if (!bgStars) return
 
     const bgFragment = document.createDocumentFragment()
     for (let i = 0; i < 700; i++) {
@@ -53,7 +37,6 @@ export function Screen5_Galaxy() {
     bgStars.appendChild(bgFragment)
 
     return () => {
-      galaxy.innerHTML = ''
       bgStars.innerHTML = ''
     }
   }, [])
@@ -62,9 +45,18 @@ export function Screen5_Galaxy() {
     <div className="relative w-full h-full overflow-hidden" style={{ background: 'black' }}>
       <div ref={bgStarsRef} className={styles.bgStars} />
 
-      <div className={styles.universe}>
-        <div ref={galaxyRef} className={styles.galaxy} />
-      </div>
+      <Tilt
+        className={styles.galaxyTilt}
+        tiltMaxAngleX={8}
+        tiltMaxAngleY={6}
+        transitionSpeed={2200}
+        scale={1.1}
+        trackOnWindow
+        gyroscope={false}
+        perspective={1400}
+      >
+        <Galaxy />
+      </Tilt>
 
       <motion.div
         className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8"

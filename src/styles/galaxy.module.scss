@@ -1,23 +1,9 @@
 // src/styles/galaxy.module.scss
 
-.universe {
-  position: fixed;
-  top: 0; bottom: 0; left: 0; right: 0;
-  transform-style: preserve-3d;
-  transform: perspective(50em) rotateX(-120deg) rotateY(20deg);
-}
-
-.galaxy {
-  position: fixed;
-  top: 0; bottom: 0; left: 0; right: 0;
-  animation: rotate 300s linear infinite;
-  background-image: radial-gradient(circle, peachpuff, darkblue, transparent 70%);
-  transform-style: preserve-3d;
-  border-radius: 50%;
-  overflow: hidden;
-  height: 800px;
-  width: 800px;
-  margin: auto;
+.galaxyTilt {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
 }
 
 .star {
