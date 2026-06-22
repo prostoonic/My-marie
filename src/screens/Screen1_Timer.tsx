@@ -71,11 +71,10 @@ function UnitBox({ value, label, index }: UnitBoxProps) {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="absolute inset-0 flex items-center justify-center text-center tabular-nums leading-[1.08]"
               style={{
-                fontFamily: '"Cormorant Garamond", serif',
+                fontFamily: '"DM Sans", sans-serif',
                 color: '#ffffff',
-                fontSize: '3rem',
-                fontWeight: 600,
-                paddingBottom: '0.08em',
+                fontSize: '2.2rem',
+                fontWeight: 500,
               }}
             >
               {value}

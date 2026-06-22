@@ -56,12 +56,17 @@ export function Screen2_Letter() {
             </motion.p>
 
             <motion.div
-              className="relative w-72 h-48 rounded-2xl flex items-center justify-center"
+              className="relative w-72 h-48 rounded-2xl flex items-center justify-center overflow-hidden"
               style={{ background: '#0d0d2b', border: '1px solid rgba(204,68,170,0.3)' }}
-              whileHover={{ boxShadow: '0 0 40px rgba(204,68,170,0.3)', borderColor: '#cc44aa' }}
+              whileHover={{
+                scale: 1.04,
+                boxShadow: '0 0 40px rgba(204,68,170,0.3)',
+                borderColor: '#cc44aa',
+              }}
+              transition={{ type: 'spring', stiffness: 320, damping: 22 }}
             >
               <div
-                className="absolute top-0 left-0 right-0"
+                className="absolute top-0 left-0 right-0 pointer-events-none"
                 style={{
                   height: 0,
                   borderLeft: '144px solid transparent',
@@ -70,11 +75,26 @@ export function Screen2_Letter() {
                 }}
               />
               <motion.div
-                className="text-4xl relative z-10"
+                className="relative z-10"
+                style={{ marginTop: '-10px' }}
                 animate={{ rotate: [-2, 2, -2] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               >
-                ✉️
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="36"
+                  height="36"
+                  viewBox="0 0 24 24"
+                  fill="#ef4444"
+                  stroke="#ef4444"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-heart"
+                  aria-hidden="true"
+                >
+                  <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+                </svg>
               </motion.div>
             </motion.div>
 
@@ -102,7 +122,7 @@ export function Screen2_Letter() {
             >
               <div
                 ref={scrollRef}
-                className="h-full overflow-auto px-8 md:px-12 pt-10 md:pt-14 pb-10"
+                className="h-full overflow-auto"
                 style={{ scrollbarWidth: 'none' }}
               >
                 <div className="letter-paper-content">
@@ -161,7 +181,7 @@ export function Screen2_Letter() {
         )}
       </AnimatePresence>
 
-      <NavigationArrow hidden={opened} />
+      <NavigationArrow hidden />
     </div>
   )
 }
