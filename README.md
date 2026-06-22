@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# Moya Masha — Love Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Анимированный подарок-сайт на React + TypeScript с 7 полноэкранными сценами, плавными переходами и эффектами.
 
-Currently, two official plugins are available:
+## Что внутри
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 7 экранов с последовательным сценарием: от заставки до финала
+- Глобальная навигация на Zustand (`currentScreen: 0..6`)
+- Анимации на Framer Motion
+- Звездный фон через `@tsparticles/react`
+- Таймер отношений + эффекты (TypeIt, CountUp, confetti, fireworks)
+- Стили на SCSS + Tailwind v4
 
-## React Compiler
+## Технологии
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- TypeScript
+- Vite 8
+- Tailwind CSS 4
+- Vitest + jsdom
 
-## Expanding the ESLint configuration
+## Быстрый старт
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+По умолчанию dev-сервер открывается автоматически (`vite --open`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Скрипты
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `npm run dev` — запуск локальной разработки
+- `npm run build` — production-сборка
+- `npm run preview` — предпросмотр production-сборки
+- `npm run lint` — запуск ESLint
+
+## Структура проекта
+
+```text
+src/
+  components/      # Переиспользуемые UI-компоненты
+  constants/       # Конфигурация и контент-плейсхолдеры
+  hooks/           # Кастомные хуки
+  screens/         # 7 основных экранов
+  store/           # Zustand-хранилище
+  styles/          # Глобальные и модульные SCSS-стили
 ```
+
+## Где менять контент
+
+Основные плейсхолдеры находятся в `src/constants/config.ts`:
+
+- `LETTER_TEXT` — текст письма
+- `LOVE_IS_IMAGE` — путь/URL к картинке
+- `LOVE_IS_CAPTION` — подпись под карточкой
+- `MUSIC_SRC` — ссылка на mp3
+- `START_DATE` — дата начала отношений
+
+Слова для экрана с розой: `src/constants/words.ts`.
+
+## Документация
+
+- Индекс: `docs/README.md`
+- Дизайн-спека: `docs/superpowers/specs/2026-06-22-masha-love-site-design.md`
+- План реализации: `docs/superpowers/plans/2026-06-22-masha-love-site.md`

@@ -4,11 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Lenis from '@studio-freight/lenis'
 import { LETTER_TEXT } from '../constants/config'
 import { NavigationArrow } from '../components/NavigationArrow'
+import { useScreenStore } from '../store/useScreenStore'
 
 export function Screen2_Letter() {
   const [opened, setOpened] = useState(false)
   const lenisRef = useRef<Lenis | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const goNext = useScreenStore((s) => s.goNext)
 
   useEffect(() => {
     if (!opened || !scrollRef.current) return
@@ -86,60 +88,75 @@ export function Screen2_Letter() {
         ) : (
           <motion.div
             key="letter"
-            className="relative w-full max-w-2xl mx-auto h-full flex flex-col"
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 py-8 md:py-10 gap-6"
+            initial={{ opacity: 0, y: 30, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <button
-              onClick={() => setOpened(false)}
-              className="absolute top-6 right-6 z-20 text-sm"
-              style={{ color: 'rgba(255,255,255,0.4)', fontFamily: '"DM Sans", sans-serif', background: 'none', border: 'none', cursor: 'pointer' }}
+            <motion.div
+              className="letter-paper w-full max-w-3xl h-[68vh] md:h-[72vh] overflow-hidden"
+              initial={{ opacity: 0, y: 22, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.9, ease: 'easeOut' }}
             >
-              закрыть ×
-            </button>
-
-            <div
-              ref={scrollRef}
-              className="flex-1 overflow-auto px-12 py-16"
-              style={{ scrollbarWidth: 'none' }}
-            >
-              <div>
-                <motion.h2
-                  className="text-3xl mb-8 text-center"
-                  style={{
-                    fontFamily: '"Cormorant Garamond", serif',
-                    fontStyle: 'italic',
-                    color: '#ff88cc',
-                  }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  Письмо для тебя ❤️
-                </motion.h2>
-
-                {LETTER_TEXT.split('\n').map((line, i) => (
-                  <motion.p
-                    key={i}
-                    className="mb-4 leading-relaxed"
+              <div
+                ref={scrollRef}
+                className="h-full overflow-auto px-8 md:px-12 pt-10 md:pt-14 pb-10"
+                style={{ scrollbarWidth: 'none' }}
+              >
+                <div className="letter-paper-content">
+                  <motion.h2
+                    className="text-3xl md:text-4xl mb-8 text-center"
                     style={{
-                      fontFamily: '"DM Sans", sans-serif',
-                      fontWeight: 300,
-                      fontSize: '16px',
-                      color: 'rgba(255,255,255,0.85)',
-                      minHeight: line ? undefined : '1rem',
+                      fontFamily: '"Cormorant Garamond", serif',
+                      fontStyle: 'italic',
+                      color: '#7a3d63',
                     }}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 + i * 0.06, duration: 0.5 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
                   >
-                    {line}
-                  </motion.p>
-                ))}
+                    Письмо для тебя ❤️
+                  </motion.h2>
+
+                  {LETTER_TEXT.split('\n').map((line, i) => (
+                    <motion.p
+                      key={i}
+                      className="mb-4 leading-relaxed"
+                      style={{
+                        fontFamily: '"DM Sans", sans-serif',
+                        fontWeight: 400,
+                        fontSize: '17px',
+                        color: 'rgba(54,34,23,0.9)',
+                        minHeight: line ? undefined : '1rem',
+                      }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.25 + i * 0.05, duration: 0.45 }}
+                    >
+                      {line}
+                    </motion.p>
+                  ))}
+                </div>
               </div>
-            </div>
+            </motion.div>
+
+            <motion.button
+              onClick={goNext}
+              className="primary-cta-button next-page-button"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: '0 16px 34px rgba(204, 68, 170, 0.45)',
+                filter: 'brightness(1.05)',
+              }}
+              whileTap={{ scale: 0.98 }}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              Дальше
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

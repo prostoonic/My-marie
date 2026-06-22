@@ -1,7 +1,7 @@
 // src/constants/config.ts
 
 /** Дата начала отношений */
-export const START_DATE = new Date('2024-01-21T00:00:00');
+export const START_DATE = new Date('2024-06-21T00:00:00');
 
 /** Текст письма (Экран 2). Замени на своё письмо. */
 export const LETTER_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -14,10 +14,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`;
 
 /** Путь или URL к картинке Love Is (Экран 3). Замени когда будет готова. */
-export const LOVE_IS_IMAGE = '';
+export const LOVE_IS_IMAGE = '/love-is.png';
 
 /** Подпись под картинкой Love Is (Экран 3). */
 export const LOVE_IS_CAPTION = '';
-
-/** Путь или URL к музыкальному файлу mp3. Оставь пустым — плеер покажет заглушку. */
-export const MUSIC_SRC = '';
+    

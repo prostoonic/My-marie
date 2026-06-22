@@ -55,16 +55,21 @@ export function Screen6_Final() {
       explosion: 5,
     })
     fw.start()
-    const stopTimer = setTimeout(() => {
+
+    const cleanupFireworks = () => {
       fw.stop()
       if (document.body.contains(container)) {
         document.body.removeChild(container)
       }
+    }
+
+    const stopTimer = setTimeout(() => {
+      cleanupFireworks()
     }, 6000)
 
     return () => {
       clearTimeout(stopTimer)
-      try { fw.stop(); if (document.body.contains(container)) document.body.removeChild(container) } catch {}
+      cleanupFireworks()
     }
   }, [revealed])
 
@@ -93,22 +98,12 @@ export function Screen6_Final() {
             </h1>
             <motion.button
               onClick={() => setRevealed(true)}
-              className="px-10 py-3 rounded-full text-sm uppercase"
-              style={{
-                border: '1px solid rgba(204,68,170,0.5)',
-                fontFamily: '"DM Sans", sans-serif',
-                fontWeight: 300,
-                letterSpacing: '0.2em',
-                color: 'rgba(255,255,255,0.85)',
-                background: 'transparent',
-                cursor: 'pointer',
-              }}
+              className="primary-cta-button"
               whileHover={{
-                boxShadow: '0 0 30px rgba(255,136,204,0.4)',
-                background: 'rgba(204,68,170,0.15)',
-                borderColor: '#ff88cc',
+                boxShadow: '0 16px 34px rgba(204, 68, 170, 0.45)',
+                filter: 'brightness(1.05)',
               }}
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.98 }}
             >
               Узнать
             </motion.button>

@@ -5,7 +5,6 @@ import { ParticlesProvider } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
 import { useScreenStore } from './store/useScreenStore'
 import { MobileGuard } from './components/MobileGuard'
-import { MusicPlayer } from './components/MusicPlayer'
 import { Screen0_Splash }  from './screens/Screen0_Splash'
 import { Screen1_Timer }   from './screens/Screen1_Timer'
 import { Screen2_Letter }  from './screens/Screen2_Letter'
@@ -43,7 +42,6 @@ export default function App() {
     <ParticlesProvider init={initEngine}>
       <MobileGuard>
         <div className="relative w-full h-full overflow-hidden" style={{ background: '#050510' }}>
-          <MusicPlayer />
           <AnimatePresence mode="wait">
             <motion.div
               key={currentScreen}

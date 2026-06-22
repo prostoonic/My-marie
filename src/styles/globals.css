@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #050510;
+  --color-surface: #0d0d2b;
+  --color-accent: #cc44aa;
+  --color-highlight: #ff88cc;
+  --color-gold: #d4af37;
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "DM Sans", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #050510;
+  color: #ffffff;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+}
+
+.primary-cta-button {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.95rem 2.8rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgba(255, 136, 204, 0.95) 0%, rgba(204, 68, 170, 0.95) 45%, rgba(121, 56, 176, 0.92) 100%);
+  box-shadow:
+    0 10px 26px rgba(204, 68, 170, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+}
+
+.next-page-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 11rem;
+  min-height: 3.2rem;
+  font-size: 0.75rem;
+}
+
+.letter-paper {
+  border-radius: 24px;
+  border: 1px solid rgba(139, 109, 67, 0.28);
+  box-shadow:
+    0 24px 60px rgba(10, 10, 22, 0.4),
+    0 4px 14px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  background:
+    radial-gradient(circle at 20% 18%, rgba(140, 108, 63, 0.1) 0 1.5px, transparent 1.6px),
+    radial-gradient(circle at 78% 42%, rgba(172, 139, 88, 0.09) 0 1.4px, transparent 1.5px),
+    radial-gradient(circle at 30% 80%, rgba(156, 121, 73, 0.07) 0 1.3px, transparent 1.4px),
+    linear-gradient(180deg, #fff9e8 0%, #f4ead0 100%);
+}
+
+.letter-paper-content {
+  color: rgba(54, 34, 23, 0.9);
+}
+
+::selection {
+  background: rgba(204, 68, 170, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050510;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cc44aa;
+  border-radius: 2px;
+}
