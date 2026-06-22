@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import Tilt from 'react-parallax-tilt'
 import { NavigationArrow } from '../components/NavigationArrow'
 import { Galaxy } from '../components/Galaxy'
-import styles from '../styles/galaxy.module.scss'
 import TypeIt from 'typeit-react'
 
 function rando(range: number) {
@@ -21,7 +20,6 @@ export function Screen5_Galaxy() {
     const bgFragment = document.createDocumentFragment()
     for (let i = 0; i < 700; i++) {
       const star = document.createElement('span')
-      star.className = styles.star
       const d = rando(5)
       Object.assign(star.style, {
         height: `${d}px`,
@@ -43,10 +41,8 @@ export function Screen5_Galaxy() {
 
   return (
     <div className="relative w-full h-full overflow-hidden" style={{ background: 'black' }}>
-      <div ref={bgStarsRef} className={styles.bgStars} />
 
       <Tilt
-        className={styles.galaxyTilt}
         tiltMaxAngleX={8}
         tiltMaxAngleY={6}
         transitionSpeed={2200}
@@ -65,7 +61,7 @@ export function Screen5_Galaxy() {
         transition={{ delay: 2, duration: 1 }}
       >
         <div
-          className="text-2xl md:text-3xl leading-loose"
+          className="text-2xl md:text-3xl leading-loose rounded-2xl px-8 py-6"
           style={{
             fontFamily: '"Cormorant Garamond", serif',
             fontStyle: 'italic',
@@ -73,6 +69,9 @@ export function Screen5_Galaxy() {
             color: '#ffffff',
             textShadow: '0 0 30px rgba(255,136,204,0.6)',
             maxWidth: '600px',
+            background: 'rgba(120, 120, 130, 0.22)',
+            border: '1px solid rgba(70, 70, 80, 0.45)',
+            backdropFilter: 'blur(6px)',
           }}
         >
           <TypeIt

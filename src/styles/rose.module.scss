@@ -35,6 +35,38 @@ $green2: color.adjust(#066406, $lightness: -5%);
   filter: saturate(1.08) brightness(1.06);
 }
 
+.fallingWord {
+  position: absolute;
+  top: -40px;
+  z-index: 3;
+  pointer-events: auto;
+  cursor: default;
+  user-select: none;
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}
+
+.fallingWordGlow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translate(8px, 8px) scale(1.03);
+  filter: blur(10px);
+  color: rgba(255, 136, 204, 0.72);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  pointer-events: none;
+}
+
+.fallingWordLabel {
+  position: relative;
+  z-index: 1;
+}
+
+.fallingWord:hover .fallingWordGlow {
+  opacity: 0.55;
+  transform: translate(14px, 12px) scale(1.06);
+}
+
 .glass {
   height: 350px;
   width: 200px;

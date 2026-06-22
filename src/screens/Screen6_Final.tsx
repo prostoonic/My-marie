@@ -1,7 +1,6 @@
 // src/screens/Screen6_Final.tsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useId } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import confetti from 'canvas-confetti'
 import { Fireworks } from 'fireworks-js'
 import { StarField } from '../components/StarField'
 
@@ -9,35 +8,90 @@ const INFINITY_ITEMS = [
   'дней',
   'объятий',
   'поцелуев',
+  'встреч',
+  'поездок',
+  'прогулок',
+  'причин любить тебя',
   'счастливых моментов вместе ❤️',
 ]
+
+function AnimatedInfinity({ delay }: { delay: number }) {
+  const gradientId = useId().replace(/:/g, '')
+  const glowId = useId().replace(/:/g, '')
+
+  return (
+    <motion.div
+      style={{ width: 64, height: 44 }}
+      initial={{ opacity: 0, scale: 0.85, y: 6 }}
+      animate={{
+        opacity: 1,
+        scale: [1, 1.06, 1],
+        y: [0, -1, 0],
+      }}
+      whileHover={{
+        scale: 1.15,
+        rotate: [0, -5, 5, 0],
+        filter: 'drop-shadow(0 0 12px rgba(255, 136, 204, 0.95)) drop-shadow(0 0 24px rgba(122, 196, 255, 0.55))',
+      }}
+      transition={{
+        opacity: { duration: 0.4, delay },
+        scale: { duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay },
+        y: { duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay },
+        rotate: { duration: 0.6, ease: 'easeInOut' },
+      }}
+    >
+      <svg viewBox="0 0 160 90" width="100%" height="100%" role="img" aria-label="Бесконечность">
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#7ac4ff" />
+            <stop offset="45%" stopColor="#ff88cc" />
+            <stop offset="100%" stopColor="#ffbfdc" />
+            <animateTransform
+              attributeName="gradientTransform"
+              type="translate"
+              values="-1 0;1 0;-1 0"
+              dur="4s"
+              repeatCount="indefinite"
+            />
+          </linearGradient>
+          <filter id={glowId} x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="2.2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <path
+            id={`infinity-path-${gradientId}`}
+            d="M 18 45 C 18 22, 53 22, 80 45 C 107 68, 142 68, 142 45 C 142 22, 107 22, 80 45 C 53 68, 18 68, 18 45"
+          />
+        </defs>
+
+        <use
+          href={`#infinity-path-${gradientId}`}
+          fill="none"
+          stroke={`url(#${gradientId})`}
+          strokeWidth="10"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          filter={`url(#${glowId})`}
+        />
+
+        <circle r="4.2" fill="#ffffff" opacity="0.95">
+          <animateMotion dur="2.8s" rotate="auto" repeatCount="indefinite">
+            <mpath href={`#infinity-path-${gradientId}`} />
+          </animateMotion>
+        </circle>
+      </svg>
+    </motion.div>
+  )
+}
 
 export function Screen6_Final() {
   const [revealed, setRevealed] = useState(false)
 
   useEffect(() => {
     if (!revealed) return
-
-    const duration = 5000
-    const end = Date.now() + duration
-    const frame = () => {
-      confetti({
-        particleCount: 3,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: ['#cc44aa', '#ff88cc', '#d4af37', '#ffffff'],
-      })
-      confetti({
-        particleCount: 3,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: ['#cc44aa', '#ff88cc', '#d4af37', '#ffffff'],
-      })
-      if (Date.now() < end) requestAnimationFrame(frame)
-    }
-    frame()
 
     const container = document.createElement('div')
     container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:100;'
@@ -63,14 +117,7 @@ export function Screen6_Final() {
       }
     }
 
-    const stopTimer = setTimeout(() => {
-      cleanupFireworks()
-    }, 6000)
-
-    return () => {
-      clearTimeout(stopTimer)
-      cleanupFireworks()
-    }
+    return cleanupFireworks
   }, [revealed])
 
   return (
@@ -123,7 +170,7 @@ export function Screen6_Final() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Надеюсь, впереди ещё:
+              Впереди ещё:
             </motion.p>
 
             <div className="flex flex-col gap-4">
@@ -135,14 +182,7 @@ export function Screen6_Final() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6 + i * 0.4, duration: 0.6 }}
                 >
-                  <motion.span
-                    className="text-5xl"
-                    style={{ fontFamily: '"Cormorant Garamond", serif', fontWeight: 300, color: '#ff88cc' }}
-                    animate={{ scale: [1, 1.15, 1] }}
-                    transition={{ duration: 2, delay: 1 + i * 0.4, repeat: Infinity }}
-                  >
-                    ∞
-                  </motion.span>
+                  <AnimatedInfinity delay={1 + i * 0.4} />
                   <span
                     className="text-xl"
                     style={{ fontFamily: '"DM Sans", sans-serif', fontWeight: 300, color: 'rgba(255,255,255,0.85)' }}

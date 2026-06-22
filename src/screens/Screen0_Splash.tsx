@@ -37,7 +37,7 @@ export function Screen0_Splash() {
           className="text-4xl md:text-5xl"
           style={{ fontFamily: '"Cormorant Garamond", serif', fontStyle: 'italic', fontWeight: 300, color: '#ff88cc' }}
         >
-          Для самой любимой девочки ❤️
+          Для самой любимой девочки 
         </motion.h1>
 
         <motion.p
@@ -45,7 +45,7 @@ export function Screen0_Splash() {
           className="text-base"
           style={{ color: 'rgba(255,255,255,0.55)', fontFamily: '"DM Sans", sans-serif', fontWeight: 300, letterSpacing: '0.12em' }}
         >
-          Нажми, чтобы открыть нашу маленькую историю
+          Нажми, чтобы открыть
         </motion.p>
 
         <motion.button

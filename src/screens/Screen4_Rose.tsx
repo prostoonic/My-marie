@@ -4,14 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { WORDS } from '../constants/words'
 import { NavigationArrow } from '../components/NavigationArrow'
 import styles from '../styles/rose.module.scss'
-
-interface FallingWord {
-  id: number
-  text: string
-  x: number
-  duration: number
-  color: string
-}
+import {
+  createFallingWord,
+  FALLING_WORD_INTERVAL_MS,
+  type FallingWord,
+  trimFallingWords,
+} from './screen4RoseWords'
 
 let wordIdCounter = 0
 
@@ -24,16 +22,10 @@ export function Screen4_Rose() {
       const text = WORDS[wordIndexRef.current % WORDS.length]
       wordIndexRef.current++
 
-      const word: FallingWord = {
-        id: wordIdCounter++,
-        text,
-        x: 10 + Math.random() * 80,
-        duration: 8 + Math.random() * 5,
-        color: Math.random() > 0.5 ? '#ff88cc' : '#ffffff',
-      }
-
-      setFallingWords((prev) => [...prev.slice(-20), word])
-    }, 1200)
+      setFallingWords((prev) =>
+        trimFallingWords([...prev, createFallingWord(wordIdCounter++, text)]),
+      )
+    }, FALLING_WORD_INTERVAL_MS)
 
     return () => clearInterval(interval)
   }, [])
@@ -68,10 +60,9 @@ export function Screen4_Rose() {
         {fallingWords.map((word) => (
           <motion.span
             key={word.id}
-            className="absolute pointer-events-none select-none"
+            className={styles.fallingWord}
             style={{
               left: `${word.x}%`,
-              top: '-40px',
               color: word.color,
               fontFamily: '"Cormorant Garamond", serif',
               fontStyle: 'italic',
@@ -82,8 +73,20 @@ export function Screen4_Rose() {
             animate={{ y: '110vh', opacity: [0, 1, 1, 0], rotate: 15 }}
             exit={{ opacity: 0 }}
             transition={{ duration: word.duration, ease: 'linear' }}
+            whileHover={{
+              scale: 1.14,
+              y: -10,
+              rotate: 0,
+              filter:
+                'drop-shadow(0 0 12px rgba(255, 136, 204, 0.95)) drop-shadow(0 0 26px rgba(255, 136, 204, 0.6))',
+              textShadow:
+                '0 0 10px rgba(255,255,255,0.9), 0 0 22px rgba(255,136,204,0.95), 0 0 42px rgba(255,136,204,0.65)',
+            }}
           >
-            {word.text}
+            <span className={styles.fallingWordGlow} aria-hidden="true">
+              {word.text}
+            </span>
+            <span className={styles.fallingWordLabel}>{word.text}</span>
           </motion.span>
         ))}
       </AnimatePresence>
