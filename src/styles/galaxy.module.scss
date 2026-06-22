@@ -1,0 +1,42 @@
+// src/styles/galaxy.module.scss
+
+.universe {
+  position: fixed;
+  top: 0; bottom: 0; left: 0; right: 0;
+  transform-style: preserve-3d;
+  transform: perspective(50em) rotateX(-120deg) rotateY(20deg);
+}
+
+.galaxy {
+  position: fixed;
+  top: 0; bottom: 0; left: 0; right: 0;
+  animation: rotate 300s linear infinite;
+  background-image: radial-gradient(circle, peachpuff, darkblue, transparent 70%);
+  transform-style: preserve-3d;
+  border-radius: 50%;
+  overflow: hidden;
+  height: 800px;
+  width: 800px;
+  margin: auto;
+}
+
+.star {
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+  box-shadow: -6px -8px 10px #F8A50E, -4px 7px 10px #BFF80E, 6px -4px 10px #0ED6F8;
+}
+
+.bgStars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+:global {
+  @keyframes rotate {
+    from { transform: rotateZ(0deg); }
+    to   { transform: rotateZ(360deg); }
+  }
+}
